@@ -33,10 +33,18 @@ VITE_API_BASE_URL=http://localhost:8000/api/v1
    - **Environment:** Selecione Production, Preview e Development conforme necessário
 5. Clique em **Save**
 
-### Estrutura do Projeto no Vercel
+### Configuração do Root Directory no Vercel
 
-O arquivo `vercel.json` na raiz do repositório já está configurado para:
-- **Root Directory:** `meu-frontend`
+Como o projeto está em um subdiretório (`meu-frontend/`), você precisa configurar o Root Directory no painel do Vercel:
+
+1. Acesse o painel do Vercel: https://vercel.com
+2. Selecione seu projeto
+3. Vá em **Settings** → **General**
+4. Na seção **Root Directory**, clique em **Edit**
+5. Defina o Root Directory como: `meu-frontend`
+6. Clique em **Save**
+
+O arquivo `vercel.json` já está configurado com:
 - **Build Command:** `npm run build`
 - **Output Directory:** `dist`
 - **Framework:** Vite (detecção automática)
