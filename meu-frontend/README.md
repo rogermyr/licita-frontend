@@ -35,22 +35,39 @@ VITE_API_BASE_URL=http://localhost:8000/api/v1
 
 ### Configuração do Projeto no Vercel
 
-O Vercel detecta automaticamente projetos Vite/React, mas como o projeto está em um subdiretório (`meu-frontend/`), você precisa configurar:
+**IMPORTANTE:** O arquivo `vercel.json` foi removido. O Vercel detecta automaticamente projetos Vite/React.
 
-1. **Root Directory:**
-   - Acesse o painel do Vercel: https://vercel.com
-   - Selecione seu projeto
-   - Vá em **Settings** → **General**
-   - Na seção **Root Directory**, clique em **Edit**
-   - Defina como: `meu-frontend`
-   - Clique em **Save**
+#### Passo a passo para importar no Vercel:
 
-2. **Build Settings (detecção automática):**
+1. **Conecte o repositório:**
+   - Acesse: https://vercel.com
+   - Clique em **Add New Project**
+   - Conecte seu repositório GitHub: `rogermyr/licita-frontend`
+   - Clique em **Import**
+
+2. **Configure o Root Directory (CRÍTICO):**
+   - Na tela de configuração do projeto, role até **Root Directory**
+   - Clique em **Edit**
+   - Digite: `meu-frontend`
+   - Ou selecione: `meu-frontend/` na lista
+   - Clique em **Continue**
+
+3. **Configure as variáveis de ambiente:**
+   - Na mesma tela, vá em **Environment Variables**
+   - Adicione:
+     - **Name:** `VITE_API_BASE_URL`
+     - **Value:** `https://seu-backend.com/api/v1`
+     - **Environment:** Marque Production, Preview e Development
+   - Clique em **Continue**
+
+4. **Deploy:**
    - O Vercel detectará automaticamente:
-     - **Framework Preset:** Vite
+     - **Framework Preset:** Vite (automático)
      - **Build Command:** `npm run build` (automático)
      - **Output Directory:** `dist` (automático)
-   - Não é necessário criar `vercel.json`
+   - Clique em **Deploy**
+
+**Nota:** Se você já importou o projeto antes e está tendo erro, delete o projeto no Vercel e importe novamente para evitar cache.
 
 ## Scripts Disponíveis
 
