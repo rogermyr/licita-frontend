@@ -39,35 +39,73 @@ VITE_API_BASE_URL=http://localhost:8000/api/v1
 
 #### Passo a passo para importar no Vercel:
 
-1. **Conecte o repositório:**
+**IMPORTANTE:** Siga estes passos EXATAMENTE nesta ordem para evitar o erro de `rootDirectory`.
+
+1. **Conecte o repositório (SEM configurar Root Directory ainda):**
    - Acesse: https://vercel.com
    - Clique em **Add New Project**
    - Conecte seu repositório GitHub: `rogermyr/licita-frontend`
    - Clique em **Import**
+   - **NÃO configure Root Directory nesta tela inicial**
+   - Deixe o Framework Preset como está (ou selecione Vite se aparecer)
+   - Clique em **Deploy** (mesmo que vá falhar, precisamos criar o projeto primeiro)
 
-2. **Configure o Root Directory (CRÍTICO):**
-   - Na tela de configuração do projeto, role até **Root Directory**
+2. **Após o projeto ser criado, configure o Root Directory:**
+   - Vá para o projeto recém-criado no Vercel
+   - Clique em **Settings** → **General**
+   - Role até a seção **Root Directory**
    - Clique em **Edit**
-   - Digite: `meu-frontend`
-   - Ou selecione: `meu-frontend/` na lista
-   - Clique em **Continue**
+   - Digite: `meu-frontend` (sem barra final)
+   - Clique em **Save**
+   - O Vercel pedirá para fazer um novo deploy - clique em **Redeploy**
 
 3. **Configure as variáveis de ambiente:**
-   - Na mesma tela, vá em **Environment Variables**
+   - Ainda em **Settings**, vá em **Environment Variables**
+   - Clique em **Add New**
    - Adicione:
-     - **Name:** `VITE_API_BASE_URL`
+     - **Key:** `VITE_API_BASE_URL`
      - **Value:** `https://seu-backend.com/api/v1`
      - **Environment:** Marque Production, Preview e Development
-   - Clique em **Continue**
+   - Clique em **Save**
+   - Faça um novo deploy para aplicar as variáveis
 
-4. **Deploy:**
-   - O Vercel detectará automaticamente:
-     - **Framework Preset:** Vite (automático)
-     - **Build Command:** `npm run build` (automático)
-     - **Output Directory:** `dist` (automático)
-   - Clique em **Deploy**
+4. **Verifique as configurações de Build:**
+   - Em **Settings** → **General** → **Build & Development Settings**
+   - Deve estar configurado como:
+     - **Framework Preset:** Vite
+     - **Build Command:** `npm run build`
+     - **Output Directory:** `dist`
+   - Se não estiver, ajuste manualmente
 
-**Nota:** Se você já importou o projeto antes e está tendo erro, delete o projeto no Vercel e importe novamente para evitar cache.
+**Alternativa 1 - Usar CLI do Vercel (recomendado se der erro na interface):**
+
+Se continuar dando erro na interface web, use a CLI do Vercel:
+
+```bash
+# Instale a CLI do Vercel globalmente
+npm i -g vercel
+
+# Na raiz do repositório, execute:
+vercel
+
+# Siga as perguntas:
+# - Set up and deploy? Yes
+# - Which scope? (selecione sua conta)
+# - Link to existing project? No (ou Yes se já existe)
+# - What's your project's name? licita-frontend
+# - In which directory is your code located? ./meu-frontend
+# - Want to override settings? No (deixe o Vercel detectar automaticamente)
+```
+
+Depois, configure as variáveis de ambiente:
+```bash
+vercel env add VITE_API_BASE_URL production
+# Digite a URL do backend quando solicitado
+```
+
+**Alternativa 2 - Se nada funcionar:**
+
+Se todas as tentativas falharem, a solução mais garantida é mover o conteúdo de `meu-frontend/` para a raiz do repositório. Mas isso requer reorganizar a estrutura do projeto.
 
 ## Scripts Disponíveis
 
