@@ -1,16 +1,61 @@
-# React + Vite
+# Plataforma Licitou - Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Frontend da Plataforma Licitou construído com React + Vite.
 
-Currently, two official plugins are available:
+## Configuração do Ambiente
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### Variáveis de Ambiente
 
-## React Compiler
+O projeto utiliza variáveis de ambiente para configurar a URL da API backend.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+1. **Crie um arquivo `.env`** na raiz do projeto `meu-frontend/` baseado no `.env.example`:
 
-## Expanding the ESLint configuration
+```env
+VITE_API_BASE_URL=http://localhost:8000/api/v1
+```
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+2. **Para desenvolvimento local:**
+   - Use: `http://localhost:8000/api/v1` (ou a porta que seu backend usa)
+
+3. **Para produção (Vercel):**
+   - Configure a variável de ambiente no painel do Vercel (veja seção Deploy)
+
+## Deploy no Vercel
+
+### Configuração de Variáveis de Ambiente no Vercel
+
+1. Acesse o painel do Vercel: https://vercel.com
+2. Selecione seu projeto
+3. Vá em **Settings** → **Environment Variables**
+4. Adicione a variável:
+   - **Name:** `VITE_API_BASE_URL`
+   - **Value:** `https://seu-backend.com/api/v1` (URL do seu backend em produção)
+   - **Environment:** Selecione Production, Preview e Development conforme necessário
+5. Clique em **Save**
+
+### Estrutura do Projeto no Vercel
+
+O arquivo `vercel.json` na raiz do repositório já está configurado para:
+- **Root Directory:** `meu-frontend`
+- **Build Command:** `npm run build`
+- **Output Directory:** `dist`
+- **Framework:** Vite (detecção automática)
+
+## Scripts Disponíveis
+
+- `npm run dev` - Inicia o servidor de desenvolvimento
+- `npm run build` - Cria o build de produção
+- `npm run preview` - Preview do build de produção
+- `npm run lint` - Executa o linter
+
+## Desenvolvimento
+
+```bash
+# Instalar dependências
+npm install
+
+# Iniciar servidor de desenvolvimento
+npm run dev
+```
+
+O projeto estará disponível em `http://localhost:5173`
