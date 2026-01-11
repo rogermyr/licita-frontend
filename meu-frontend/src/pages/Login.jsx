@@ -88,21 +88,30 @@ function Login({ setToken, tokenStorageKey }) {
             }
         } else {
             // Lógica de Login (Token OAuth2)
-            const formData = new FormData();
-            formData.append('username', email); 
-            formData.append('password', password);
+            // ANTES: const formData = new FormData();
+            // ANTES: formData.append('username', email); 
+            // ANTES: formData.append('password', password);
             
+            // NOVO: Converte os dados para o formato URLSearchParams
+            const loginPayload = new URLSearchParams({
+                username: email,
+                password: password,
+            });
+
             try {
-                const res = await axios.post(`${baseUrl}/token`, formData);
+                // NOVO: axios vai detectar o URLSearchParams e definir o Content-Type correto
+                const res = await axios.post(`${baseUrl}/token`, loginPayload, {
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                });
+                
                 const t = res.data.access_token;
                 
                 // 1. PERSISTÊNCIA E CORREÇÃO DA CHAVE
-                // MODIFICADO: Usamos a chave correta (access_token)
                 localStorage.setItem(tokenStorageKey, t); 
                 
                 // 2. CORREÇÃO DE RACE CONDITION (ADICIONANDO DELAY)
-                // NOVO: Espera 100ms para garantir que o LocalStorage foi persistido 
-                // antes que o Dashboard (e o Interceptor) disparem a leitura.
                 console.log("Token salvo localmente. Aguardando 100ms para sincronização...");
                 await new Promise(resolve => setTimeout(resolve, 100));
                 
@@ -113,12 +122,13 @@ function Login({ setToken, tokenStorageKey }) {
                 // Não é necessário chamar navigate('/dashboard') explicitamente
 
             } catch (error) {
-                alert('Credenciais inválidas');
+                console.error("Erro no login:", error.response?.data); // Log mais detalhado
+                alert(error.response?.data?.detail || 'Credenciais inválidas');
             } finally {
                 setLoading(false);
             }
         }
-    };
+        };
 
     return (
         <div className="login-wrapper">
